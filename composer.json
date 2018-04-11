@@ -1,0 +1,16 @@
+{
+    "name": "kendertas/test",
+    "type":"library",
+    "license":"proprietary",
+    "description": "",
+
+
+    "autoload": {
+        "psr-4": {
+            "KenderTas\\Installer\\": "src/"
+        }
+    },
+    "extra": {
+        "class": "\\KenderTas\\Installer\\CoreManager"
+    }
+}
