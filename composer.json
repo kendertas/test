@@ -2,6 +2,7 @@
     "name": "kendertas/test",
     "type":"library",
     "license":"proprietary",
+    "minimum-stability":"stable",
     "description": "",
 
 
