@@ -37,6 +37,7 @@ class CoreManager implements PluginInterface, EventSubscriberInterface {
 
 
     public static function getSubscribedEvents() {
+        echo "getSubscribedEvents";
         return [
             PackageEvents::POST_PACKAGE_INSTALL => [
                 ['installCore', 0]
@@ -52,10 +53,9 @@ class CoreManager implements PluginInterface, EventSubscriberInterface {
      * @param IOInterface $io
      */
     public function activate(Composer $composer, IOInterface $io) {
+
         $this->composer = $composer;
         $this->io = $io;
-        $this->vendorDir = rtrim($composer->getConfig()->get('vendor-dir'), '/');
-        $this->filesystem = new Filesystem();
     }
 
     /**
