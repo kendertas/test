@@ -1,10 +1,13 @@
 {
     "name": "kendertas/test",
-    "type":"library",
+    "type":"composer-plugin",
     "license":"proprietary",
     "minimum-stability":"stable",
     "description": "",
 
+    "require": {
+      "composer-plugin-api": "^1.1"
+    },
 
     "autoload": {
         "psr-4": {

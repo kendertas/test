@@ -3,16 +3,13 @@
 namespace KenderTas\Installer;
 
 use Composer\Composer;
-use Composer\DependencyResolver\Operation\OperationInterface;
 use Composer\EventDispatcher\EventSubscriberInterface;
-use Composer\Installer\InstallerEvent;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
-use Composer\Installer\InstallerEvents;
+use Composer\Plugin\PluginEvents;
 use Composer\Installer\PackageEvents;
 use Composer\Installer\PackageEvent;
-use Composer\Util\Filesystem;
-use Composer\Package\PackageInterface;
+use Composer\Plugin\PreFileDownloadEvent;
 
 /**
  * Class CoreManager
@@ -32,23 +29,23 @@ class CoreManager implements PluginInterface, EventSubscriberInterface {
     protected $io;
 
     /**
-     * Vendor Directory
-     *
-     * @var string
-     */
-    protected $vendorDir;
-
-    /**
-     * @var Filesystem
-     */
-    protected $filesystem;
-
-    /**
      * Output Prefix
      *
      * @var string
      */
     protected $ioPrefix = '  - <comment>KenderTas Installer: </comment>';
+
+
+    public static function getSubscribedEvents() {
+        return [
+            PackageEvents::POST_PACKAGE_INSTALL => [
+                ['installCore', 0]
+            ],
+            PackageEvents::POST_PACKAGE_UPDATE => [
+                ['installCore', 0]
+            ]
+        ];
+    }
 
     /**
      * @param Composer $composer
@@ -85,39 +82,6 @@ class CoreManager implements PluginInterface, EventSubscriberInterface {
 
         return ($this->vendorDir ? $this->vendorDir . '/' : '') . $package->getPrettyName();
     }
-
-    /**
-     * Tell event dispatcher what events we want to subscribe to
-     * @return array
-     */
-    public static function getSubscribedEvents() {
-        return [
-            InstallerEvents::POST_DEPENDENCIES_SOLVING => [
-                ['checkCoreDependencies', 0]
-            ],
-            PackageEvents::POST_PACKAGE_INSTALL => [
-                ['installCore', 0]
-            ],
-            PackageEvents::PRE_PACKAGE_UPDATE => [
-                ['uninstallCore', 0]
-            ],
-            PackageEvents::POST_PACKAGE_UPDATE => [
-                ['installCore', 0]
-            ],
-            PackageEvents::PRE_PACKAGE_UNINSTALL => [
-                ['uninstallCore', 0]
-            ],
-        ];
-    }
-
-    /**
-     * Check that there is only 1 core package required
-     */
-    public function checkCoreDependencies(InstallerEvent $event) {
-        return true;
-    }
-
-
     /**
      * @param PackageEvent $event
      */
