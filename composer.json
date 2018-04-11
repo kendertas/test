@@ -1,5 +1,6 @@
 {
     "name": "kendertas/test",
+    "type":"composer-plugin",
     "license":"proprietary",
     "minimum-stability":"stable",
     "description": "",
