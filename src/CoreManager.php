@@ -59,30 +59,6 @@ class CoreManager implements PluginInterface, EventSubscriberInterface {
     }
 
     /**
-     * @param PackageInterface $package
-     * @return string
-     */
-    public function getInstallPath(PackageInterface $package) {
-        $targetDir = $package->getTargetDir();
-
-        if ($targetDir) {
-            return sprintf('%s/%s', $this->getPackageBasePath($package), $targetDir);
-        }
-
-        return $this->getPackageBasePath($package);
-    }
-
-    /**
-     * @param PackageInterface $package
-     * @return string
-     */
-    protected function getPackageBasePath(PackageInterface $package) {
-        $this->filesystem->ensureDirectoryExists($this->vendorDir);
-        $this->vendorDir = realpath($this->vendorDir);
-
-        return ($this->vendorDir ? $this->vendorDir . '/' : '') . $package->getPrettyName();
-    }
-    /**
      * @param PackageEvent $event
      */
     public function installCore(PackageEvent $event) {
